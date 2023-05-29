@@ -1,7 +1,6 @@
 #pragma once
 
-#include "Arduino.h"
-#include "..\Render\Scene.h"
+#include "../Render/Scene.h"
 
 template<size_t numObjects>
 class Animation{

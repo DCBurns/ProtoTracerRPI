@@ -181,10 +181,10 @@ public:
 		}
 	}
 
-	String ToString() {
-		String x = XAxis.ToString();
-		String y = YAxis.ToString();
-		String z = ZAxis.ToString();
+	std::string ToString() {
+		std::string x = XAxis.ToString();
+		std::string y = YAxis.ToString();
+		std::string z = ZAxis.ToString();
 
 		return x + "\n" + y + "\n" + z + "\n";
 	}

@@ -56,8 +56,8 @@ public:
         };
     }
     
-    String ToString() {
-        return "[" + String(A) + ", " + String(B) + ", " + String(C) + "]";
+    std::string ToString() {
+        return "[" + std::to_string(A) + ", " + std::to_string(B) + ", " + std::to_string(C) + "]";
     }
     
 } IndexGroup;

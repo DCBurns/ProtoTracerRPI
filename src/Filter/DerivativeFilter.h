@@ -1,9 +1,9 @@
 #pragma once
 
-#include <Arduino.h>
+
 #include "RunningAverageFilter.h"
 #include "MinFilter.h"
-#include "..\Math\Mathematics.h"
+#include "../Math/Mathematics.h"
 
 class DerivativeFilter{
 private:

@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\Math\Quaternion.h"
-#include "..\Math\Vector3D.h"
+#include "../Math/Quaternion.h"
+#include "../Math/Vector3D.h"
 
 class Triangle3D {
 private:
@@ -78,7 +78,7 @@ public:
 		}
 	}
 
-	String ToString() {
+	std::string ToString() {
 		return p1->ToString() + " " + p2->ToString() + " " + p3->ToString();
 	}
 };

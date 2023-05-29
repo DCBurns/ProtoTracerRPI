@@ -3,9 +3,9 @@
 #include "AnimationTrack.h"
 
 template<size_t parameters>
-class BlinkTrack : public AnimationTrack<parameters, 10>{
+class BlinkTrack : public AnimationTrack<parameters, 11>{
 private:
-    void AddKeyFrames(){
+    void AddKeyFrames() override {
         this->track.AddKeyFrame(0.0f, 0.0f);
         this->track.AddKeyFrame(2.75f, 0.0f);
         this->track.AddKeyFrame(3.0f, 1.0f);

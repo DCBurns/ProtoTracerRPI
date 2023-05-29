@@ -1,8 +1,8 @@
 #pragma once
 
-#include "..\Math\Rotation.h"
-#include "..\Math\Transform.h"
-#include "..\Render\CameraLayout.h"
+#include "../Math/Rotation.h"
+#include "../Math/Transform.h"
+#include "../Render/CameraLayout.h"
 #include "CameraBase.h"
 #include "PixelGroup.h"
 #include "Scene.h"

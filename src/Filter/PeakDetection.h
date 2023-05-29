@@ -1,7 +1,7 @@
 #pragma once
 
-#include <Arduino.h>
-#include "..\Math\Mathematics.h"
+
+#include "../Math/Mathematics.h"
 
 template <size_t sampleSize>
 class PeakDetection{
@@ -49,7 +49,7 @@ public:
             filData[i] = 0.0f;
             avg[i] = 0.0f;
             std[i] = 0.0f;
-            maxData = max(maxData, data[i]);
+            maxData = std::max(maxData, data[i]);
         }
 
         if(maxData > threshold){

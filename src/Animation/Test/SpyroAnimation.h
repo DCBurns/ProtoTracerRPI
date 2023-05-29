@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Animation.h"
-#include "..\Math\FunctionGenerator.h"
-#include "..\Objects\Spyro.h"
-#include "..\Materials\NormalMaterial.h"
-#include "..\Render\ObjectDeformer.h"
+#include "../Animation.h"
+#include "../../Signals/FunctionGenerator.h"
+#include "../../Objects/Spyro.h"
+#include "../../Materials/NormalMaterial.h"
+#include "../../Render/ObjectDeformer.h"
 
-class SpyroAnimation : public Animation{
+class SpyroAnimation : public Animation<1>{
 private:
     Spyro spyro;
     FunctionGenerator fGenRotation = FunctionGenerator(FunctionGenerator::Sine, -30.0f, 30.0f, 6.0f);
@@ -16,11 +16,19 @@ private:
     ObjectDeformer oD = ObjectDeformer(spyro.GetObject());
 
 public:
-    SpyroAnimation() : Animation(1) {
-        scene->AddObject(spyro.GetObject());
+    SpyroAnimation() {
+        scene.AddObject(spyro.GetObject());
 
         //spyro.GetObject()->SetMaterial(&nM);
     }
+
+    uint8_t GetAccentBrightness(){
+        return 50;
+    };
+
+    uint8_t GetBrightness(){
+        return 50;
+    };
 
     void FadeIn(float stepRatio) override {}
     void FadeOut(float stepRatio) override {}

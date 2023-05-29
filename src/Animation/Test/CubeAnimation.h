@@ -1,12 +1,12 @@
 #pragma once
 
-#include "Animation.h"
-#include "..\Objects\Cube.h"
-#include "..\Materials\DepthMaterial.h"
-#include "..\Materials\LightMaterial.h"
-#include "..\Math\FunctionGenerator.h"
+#include "../Animation.h"
+#include "../../Objects/Cube.h"
+#include "../../Materials/DepthMaterial.h"
+#include "../../Materials/LightMaterial.h"
+#include "../../Signals/FunctionGenerator.h"
 
-class CubeAnimation : public Animation{
+class CubeAnimation : public Animation<1>{
 private:
     Cube cube;
     DepthMaterial dMat = DepthMaterial(DepthMaterial::Z, 100.0f, 600.0f);
@@ -15,12 +15,20 @@ private:
     FunctionGenerator fGenScale = FunctionGenerator(FunctionGenerator::Sine, 0.25f, 0.75f, 4.0f);
 
 public:
-    CubeAnimation() : Animation(1) {
-        scene->AddObject(cube.GetObject());
+    CubeAnimation() {
+        scene.AddObject(cube.GetObject());
         
         cube.GetObject()->SetMaterial(&dMat);
     }
 
+    uint8_t GetAccentBrightness(){
+        return 50;
+    };
+
+    uint8_t GetBrightness(){
+        return 50;
+    };
+    
     void FadeIn(float stepRatio) override {}
     void FadeOut(float stepRatio) override {}
 

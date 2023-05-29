@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Arduino.h>
+
 #include <Adafruit_BNO055.h>
-#include "..\Math\Vector3D.h"
+#include "../Math/Vector3D.h"
 
 class BNO055{
 public:

@@ -17,11 +17,11 @@ public:
 		Direction = direction;
 	}
 
-	String ToString() {
-		String r = Mathematics::DoubleToCleanString(Rotation);
-		String x = Mathematics::DoubleToCleanString(Direction.X);
-		String y = Mathematics::DoubleToCleanString(Direction.Y);
-		String z = Mathematics::DoubleToCleanString(Direction.Z);
+	std::string ToString() {
+		std::string r = Mathematics::DoubleToCleanString(Rotation);
+		std::string x = Mathematics::DoubleToCleanString(Direction.X);
+		std::string y = Mathematics::DoubleToCleanString(Direction.Y);
+		std::string z = Mathematics::DoubleToCleanString(Direction.Z);
 
 		return r + ": [" + x + " " + y + " " + z + "]";
 	}

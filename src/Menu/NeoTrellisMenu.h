@@ -1,10 +1,10 @@
 #pragma once
 
-#include <Arduino.h>
-#include "..\Controls\DampedSpring.h"
-#include "..\Sensors\NeoTrellisMenuHandler.h"
-#include "..\Materials\Animated\RainbowNoise.h"
-#include "..\Materials\Menu\TextEngine.h"
+
+#include "../Controls/DampedSpring.h"
+#include "../Sensors/NeoTrellisMenuHandler.h"
+#include "../Materials/Animated/RainbowNoise.h"
+#include "../Materials/Menu/TextEngine.h"
 
 class Menu{
 public:
@@ -52,8 +52,8 @@ private:
     static uint8_t faceSize;
     static uint8_t color;
     
-    static String line1;
-    static String line2;
+    static std::string line1;
+    static std::string line2;
 
     static void SetMaxEntries(){
         MenuHandler<menuCount>::SetMenuMax(Faces, faceCount);
@@ -197,8 +197,8 @@ public:
         }
     }
 
-    static String GenerateLine(uint8_t options, uint8_t selection){
-        String text;
+    static std::string GenerateLine(uint8_t options, uint8_t selection){
+        std::string text;
         uint8_t spacing = options >= 5 ? 3 : (menuLength - options) / 2;
 
         for(uint8_t i = 0; i < spacing; i++){//pad spacing
@@ -370,5 +370,5 @@ uint8_t Menu::faceSize = 0;
 uint8_t Menu::color = 0;
 
 //                    111111111111222222222222333333333333444444444444555555555555666666666666777777777777888888888888999999999999
-String Menu::line1 = "               BRIGHT     SIDEBRT       MIC        LEVEL        BOOP        SPEC        SIZE       COLOR    ";
-String Menu::line2 = " a b c d e f   12^45       12^45       ON off     123456|8     on OFF      ON off      12^45      123456|8  ";
+std::string Menu::line1 = "               BRIGHT     SIDEBRT       MIC        LEVEL        BOOP        SPEC        SIZE       COLOR    ";
+std::string Menu::line2 = " a b c d e f   12^45       12^45       ON off     123456|8     on OFF      ON off      12^45      123456|8  ";

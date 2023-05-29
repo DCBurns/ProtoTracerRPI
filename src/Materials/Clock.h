@@ -1,7 +1,7 @@
 #pragma once
 
 #include "SimpleMaterial.h"
-#include "Menu\TextEngine.h"
+#include "Menu/TextEngine.h"
 
 class Clock : public Material {
 private:
@@ -55,12 +55,12 @@ public:
     }
 
     void Update(){
-        String secondString = second < 10 ? "0" + String(second) : String(second);
-        String minuteString = minute < 10 ? "0" + String(minute) : String(minute);
-        String hourMinSec = String(hour) + ":" + minuteString + ":" + secondString;
-        String date = String(month) + "/" + String(day) + "/" + String(year);
+        std::string secondString = second < 10 ? "0" + std::string(second) : std::string(second);
+        std::string minuteString = minute < 10 ? "0" + std::string(minute) : std::string(minute);
+        std::string hourMinSec = std::string(hour) + ":" + minuteString + ":" + secondString;
+        std::string date = std::string(month) + "/" + std::string(day) + "/" + std::string(year);
         
-        String day;
+        std::string day;
 
         switch(wDay){
             case 0: day = "SATURDAY"; break;

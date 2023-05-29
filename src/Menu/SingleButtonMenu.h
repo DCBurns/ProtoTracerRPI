@@ -1,10 +1,10 @@
 #pragma once
 
-#include <Arduino.h>
-#include "..\Controls\DampedSpring.h"
-#include "..\Sensors\SingleButtonMenuHandler.h"
-#include "..\Materials\Animated\RainbowNoise.h"
-#include "..\Materials\Menu\TextEngine.h"
+
+#include "../Controls/DampedSpring.h"
+#include "../Sensors/PiBluetoothMenuHandler.h"
+#include "../Materials/Animated/RainbowNoise.h"
+#include "../Materials/Menu/TextEngine.h"
 
 class Menu{
 public:
@@ -52,8 +52,8 @@ private:
     static uint8_t faceSize;
     static uint8_t color;
     
-    static String line1;
-    static String line2;
+    static std::string line1;
+    static std::string line2;
 
     static void SetMaxEntries(){
         MenuHandler<menuCount>::SetMenuMax(Faces, faceCount);
@@ -68,21 +68,21 @@ private:
     }
 
     static void SetDefaultEntries(){
-        MenuHandler<menuCount>::SetDefaultValue(Faces, 0);
+        MenuHandler<menuCount>::SetDefaultValue(Faces, 1);
         MenuHandler<menuCount>::SetDefaultValue(Bright, 3);
         MenuHandler<menuCount>::SetDefaultValue(AccentBright, 5);
         MenuHandler<menuCount>::SetDefaultValue(Microphone, 1);
         MenuHandler<menuCount>::SetDefaultValue(MicLevel, 5);
         MenuHandler<menuCount>::SetDefaultValue(BoopSensor, 1);
         MenuHandler<menuCount>::SetDefaultValue(SpectrumMirror, 0);
-        MenuHandler<menuCount>::SetDefaultValue(FaceSize, 0);
+        MenuHandler<menuCount>::SetDefaultValue(FaceSize, 4);
         MenuHandler<menuCount>::SetDefaultValue(Color, 0);
 
         MenuHandler<menuCount>::SetInitialized();
     }
 
 public:
-    static void Initialize(uint8_t faceCount, uint8_t pin, uint16_t holdingTime, Vector2D size = Vector2D(240, 50)){
+    static void Initialize(uint8_t faceCount, uint16_t holdingTime, Vector2D size = Vector2D(240, 50)){
         Menu::faceCount = faceCount;
 
         dampedSpringX.SetConstants(1.0f, 0.5f);
@@ -94,7 +94,7 @@ public:
         textEngine.SetPositionOffset(position);
         textEngine.SetBlinkTime(200);
 
-        if (!MenuHandler<menuCount>::Initialize(pin, holdingTime)){
+        if (!MenuHandler<menuCount>::Initialize(holdingTime)){
             SetDefaultEntries();
         }
 
@@ -211,8 +211,8 @@ public:
         }
     }
 
-    static String GenerateLine(uint8_t options, uint8_t selection){
-        String text;
+    static std::string GenerateLine(uint8_t options, uint8_t selection){
+        std::string text;
         uint8_t spacing = options >= 5 ? 3 : (menuLength - options) / 2;
 
         for(uint8_t i = 0; i < spacing; i++){//pad spacing
@@ -269,6 +269,7 @@ public:
 
     static void SetFaceState(uint8_t faceState){
         Menu::faceState = faceState;
+        MenuHandler<menuCount>::SetDefaultValue(Faces, faceState);
     }
 
     static uint8_t GetFaceState(){
@@ -384,5 +385,5 @@ uint8_t Menu::faceSize = 0;
 uint8_t Menu::color = 0;
 
 //                    111111111111222222222222333333333333444444444444555555555555666666666666777777777777888888888888999999999999
-String Menu::line1 = "               BRIGHT     SIDEBRT       MIC        LEVEL        BOOP        SPEC        SIZE       COLOR    ";
-String Menu::line2 = " a b c d e f   12^45       12^45       ON off     123456|8     on OFF      ON off      12^45      123456|8  ";
+std::string Menu::line1 = "               BRIGHT     SIDEBRT       MIC        LEVEL        BOOP        SPEC        SIZE       COLOR    ";
+std::string Menu::line2 = " a b c d e f   12^45       12^45       ON off     123456|8     on OFF      ON off      12^45      123456|8  ";

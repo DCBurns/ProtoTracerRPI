@@ -1,11 +1,11 @@
 #pragma once
 
-#include <Arduino.h>
+
 #include "Characters.h"
-#include "..\Material.h"
-#include "..\..\Math\Mathematics.h"
-#include "..\..\Math\Rotation.h"
-#include "..\..\Math\Vector2D.h"
+#include "../Material.h"
+#include "../../Math/Mathematics.h"
+#include "../../Math/Rotation.h"
+#include "../../Math/Vector2D.h"
 
 //invert block for selection
 
@@ -65,7 +65,7 @@ public:
     }
 
 
-    void SetText(uint8_t line, String value, bool centerText = false){
+    void SetText(uint8_t line, std::string value, bool centerText = false){
         uint8_t length = value.length();
         int spacing = centerText ? (length - characterWidth) / 2 : 0;
         

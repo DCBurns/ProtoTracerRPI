@@ -2,15 +2,15 @@
 
 #define ARM_MATH_CM4
 
-#include <Arduino.h>
+
 #include <arm_math.h>
 #include <IntervalTimer.h>
-#include "..\Math\Mathematics.h"
+#include "../Math/Mathematics.h"
 #include "MicrophoneSimple_MAX9814.h"
-#include "..\Filter\DerivativeFilter.h"
-#include "..\Filter\FFTFilter.h"
-#include "..\Filter\PeakDetection.h"
-#include "..\Signals\TimeStep.h"
+#include "../Filter/DerivativeFilter.h"
+#include "../Filter/FFTFilter.h"
+#include "../Filter/PeakDetection.h"
+#include "../Signals/TimeStep.h"
 
 class MicrophoneFourierIT{
 private:

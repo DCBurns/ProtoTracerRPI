@@ -1,11 +1,17 @@
 #pragma once
 
-#include "..\Materials\GradientMaterial.h"
-#include "..\Math\Vector3D.h"
+#include "../Materials/GradientMaterial.h"
+#include "../Math/Vector3D.h"
+#include <random>
 
 template<size_t colors>
 class SimplexNoise : public Material{
 private:
+
+    // std::random_device rd();     // Only used once to initialise (seed) engine
+    // std::mt19937 rng(rd());    // Random-number engine used (Mersenne-Twister in this case)
+    // std::uniform_int_distribution<int> uni(0,256); // Guaranteed unbiased
+
     GradientMaterial<colors>* gradientMaterial;
 
     Vector3D noiseScale = Vector3D(1, 1, 1);
@@ -75,8 +81,9 @@ public:
         
         //the seed determines the swaps that occur between the default order and the order we're actually going to use
         for(int i = 0; i < 400; i++){
-            uint8_t swapFrom = random(256);
-            uint8_t swapTo = random(256);
+            // TODO: Use the random library
+            uint8_t swapFrom = rand() % 256;
+            uint8_t swapTo = rand() % 256;
             
             uint8_t temp = p[swapFrom];
             p[swapFrom] = p[swapTo];

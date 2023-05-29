@@ -1,8 +1,8 @@
 #pragma once
 
-#include "..\Materials\Material.h"
-#include "..\Math\Transform.h"
-#include "..\Math\Vector2D.h"
+#include "../Materials/Material.h"
+#include "../Math/Transform.h"
+#include "../Math/Vector2D.h"
 #include "Triangle3D.h"
 #include "BoundingBox2D.h"
 
@@ -187,7 +187,7 @@ public:
         return true;
     }
 
-    String ToString() {
+    std::string ToString() {
         return Vector2D(p1X, p1Y).ToString() + " " + Vector2D(p2X, p2Y).ToString() + " " + Vector2D(p3X, p3Y).ToString();
     }
 };

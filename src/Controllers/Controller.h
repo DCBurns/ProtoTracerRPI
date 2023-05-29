@@ -1,6 +1,7 @@
 #pragma once
 
-#include "..\Render\CameraBase.h"
+#include "../ArduinoPatch.h"
+#include "../Render/CameraBase.h"
 
 class Controller {
 private:

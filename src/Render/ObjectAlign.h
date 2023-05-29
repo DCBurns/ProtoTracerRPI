@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\Math\Plane.h"
+#include "../Math/Plane.h"
 #include "Object3D.h"
 
 class ObjectAlign{
@@ -299,6 +299,8 @@ public:
                 break;
         }
         
+        std::cout << "xOffset:\t" << xOffset << "\tyOffset:\t" << yOffset << "\n";
+        std::cout << "xRatio:\t" << xRatio << "\tyRatio:\t" << yRatio << "\n";
         // calculate point 1000mm in front of camera
         Vector3D cameraTarget = targetOrientation.RotateVector(Vector3D(forwardVector * 1000.0f) + Vector3D(cameraCenter.X, cameraCenter.Y, 0.0f));
 

@@ -1,51 +1,51 @@
 #pragma once
 
-#include "Animation.h"
-#include "KeyFrameTrack.h"
-#include "EasyEaseAnimator.h"
-#include "..\Morph\NukudeFace.h"
-#include "..\Render\Scene.h"
-#include "..\Materials\GradientMaterial.h"
-#include "..\Materials\SimplexNoise.h"
-#include "..\Math\FunctionGenerator.h"
-#include "..\Sensors\SerialSync.h"
-#include "..\Sensors\MicrophoneSimple.h"
-#include "..\Sensors\ButtonHandler.h"
-#include "..\Materials\NormalMaterial.h"
+#include "../Animation.h"
+#include "../KeyFrameTrack.h"
+#include "../EasyEaseAnimator.h"
+#include "../../Morph/NukudeFace.h"
+#include "../../Render/Scene.h"
+#include "../../Materials/GradientMaterial.h"
+#include "../../Materials/SimplexNoise.h"
+#include "../../Signals/FunctionGenerator.h"
+// #include "../../Sensors/SerialSync.h"
+// #include "../../Sensors/MicrophoneSimple.h"
+// #include "../../Sensors/ButtonHandler.h"
+#include "../../Materials/NormalMaterial.h"
 
-#include "Flash\ImageSequences\Rainbow.h"
+#include "Flash/ImageSequences/Rainbow.h"
 
-class NukudeFaceAnimation : public Animation{
+class NukudeFaceAnimation : public Animation<1> {
 private:
     NukudeFace pM;
-    EasyEaseAnimator eEA = EasyEaseAnimator(15, EasyEaseAnimator::Cosine);
+    EasyEaseAnimator<15> eEA = EasyEaseAnimator<15>(EasyEaseInterpolation::Cosine);
 
     RGBColor spectrum[4] = {RGBColor(0, 255, 0), RGBColor(255, 0, 0), RGBColor(0, 255, 0), RGBColor(0, 0, 255)};
-    GradientMaterial gNoiseMat = GradientMaterial(4, spectrum, 2.0f, false);
-    SimplexNoise sNoise = SimplexNoise(1, &gNoiseMat);
+    GradientMaterial<4> gNoiseMat = GradientMaterial<4>(spectrum, 2.0f, false);
+    SimplexNoise<4> sNoise = SimplexNoise<4>(1, &gNoiseMat);
 
     NormalMaterial normalMaterial;
     
     FunctionGenerator fGenMatPos = FunctionGenerator(FunctionGenerator::Sine, -10.0f, 10.0f, 4.0f);
     RainbowSequence gif = RainbowSequence(Vector2D(200, 145), Vector2D(100, 70), 60);
 
-    KeyFrameTrack blink = KeyFrameTrack(1, 0.0f, 1.0f, 10, KeyFrameTrack::Cosine);
-    KeyFrameTrack mouth = KeyFrameTrack(1, 0.0f, 1.0f, 5, KeyFrameTrack::Cosine);
+    KeyFrameTrack<1, 10> blink = KeyFrameTrack<1, 10>(0.0f, 1.0f, KeyFrameInterpolation::Cosine);
+    KeyFrameTrack<1, 5> mouth = KeyFrameTrack<1, 5>(0.0f, 1.0f, KeyFrameInterpolation::Cosine);
 
     FunctionGenerator fGenRotation = FunctionGenerator(FunctionGenerator::Sine, -30.0f, 30.0f, 2.6f);
     FunctionGenerator fGenScale = FunctionGenerator(FunctionGenerator::Sine, 3.0f, 8.0f, 4.2f);
 
-    MicrophoneSimple mic = MicrophoneSimple(22);
+    // MicrophoneSimple mic = MicrophoneSimple(22);
     bool talk = true;
 
     void LinkEasyEase(){
-        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Anger), NukudeFace::Anger, 40, 0.0f);
-        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Sadness), NukudeFace::Sadness, 90, 0.0f);
-        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Surprised), NukudeFace::Surprised, 30, 0.0f);
-        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Doubt), NukudeFace::Doubt, 60, 0.0f);
-        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Frown), NukudeFace::Frown, 90, 0.0f);
-        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::LookUp), NukudeFace::LookUp, 60, 0.0f);
-        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::LookDown), NukudeFace::LookDown, 60, 0.0f);
+        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Anger), NukudeFace::Anger, 40, 0.0f, 1.0f);
+        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Sadness), NukudeFace::Sadness, 90, 0.0f, 1.0f);
+        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Surprised), NukudeFace::Surprised, 30, 0.0f, 1.0f);
+        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Doubt), NukudeFace::Doubt, 60, 0.0f, 1.0f);
+        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::Frown), NukudeFace::Frown, 90, 0.0f, 1.0f);
+        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::LookUp), NukudeFace::LookUp, 60, 0.0f, 1.0f);
+        eEA.AddParameter(pM.GetMorphWeightReference(NukudeFace::LookDown), NukudeFace::LookDown, 60, 0.0f, 1.0f);
     }
 
     void LinkParameters(){
@@ -74,8 +74,8 @@ private:
     }
 
 public:
-    NukudeFaceAnimation() : Animation(1) {
-        scene->AddObject(pM.GetObject());
+    NukudeFaceAnimation() {
+        scene.AddObject(pM.GetObject());
 
         LinkEasyEase();
         LinkParameters();
@@ -85,8 +85,8 @@ public:
 
         pM.GetObject()->SetMaterial(&gif);
 
-        SerialSync::Initialize();
-        ButtonHandler::Initialize(15, 11);
+        // SerialSync::Initialize();
+        // ButtonHandler::Initialize(15, 11);
     }
 
     void UpdateKeyFrameTracks(){
@@ -172,6 +172,14 @@ public:
         talk = true;
     }
 
+    uint8_t GetAccentBrightness(){
+        return 50;
+    };
+
+    uint8_t GetBrightness(){
+        return 50;
+    };
+
     void FadeIn(float stepRatio) override {}
     void FadeOut(float stepRatio) override {}
 
@@ -185,28 +193,29 @@ public:
     void Update(float ratio) override {
         pM.GetObject()->Enable();//Due to Spyro track
 
-        #ifndef RIGHTFACE
-        SerialSync::Read();
+        // #ifndef RIGHTFACE
+        // SerialSync::Read();
 
-        //update offset only 2% of the time
-        if(SerialSync::GetRatio() < 0.02f){
-            if(ratio > SerialSync::GetRatio()) offset = ratio - 1.0f - SerialSync::GetRatio();
-            else offset = ratio - SerialSync::GetRatio();
-        }
+        // //update offset only 2% of the time
+        // if(SerialSync::GetRatio() < 0.02f){
+        //     if(ratio > SerialSync::GetRatio()) offset = ratio - 1.0f - SerialSync::GetRatio();
+        //     else offset = ratio - SerialSync::GetRatio();
+        // }
 
-        //adjust current frame sync to new esp32
-        ratio = fmod(ratio - offset, 1.0f);//override input to synchronize from esp
+        // //adjust current frame sync to new esp32
+        // ratio = fmod(ratio - offset, 1.0f);//override input to synchronize from esp
 
-        uint8_t mode = SerialSync::GetMode();
-        float mouthMove = SerialSync::GetMouthMove();
-        #else
-        float mouthMove = mic.Update();
-        uint8_t mode = (uint8_t)(ratio * 8.0f);//ButtonHandler::GetValue();
-        SerialSync::SetMouthMove(mouthMove);
-        SerialSync::SetMode(mode);
-        SerialSync::SetRatio(ratio);
-        SerialSync::Send();
-        #endif
+        uint8_t mode = 7;
+        // uint8_t mode = SerialSync::GetMode();
+        // float mouthMove = SerialSync::GetMouthMove();
+        // #else
+        // float mouthMove = mic.Update();
+        // uint8_t mode = (uint8_t)(ratio * 8.0f);//ButtonHandler::GetValue();
+        // SerialSync::SetMouthMove(mouthMove);
+        // SerialSync::SetMode(mode);
+        // SerialSync::SetRatio(ratio);
+        // SerialSync::Send();
+        // #endif
 
         if (mode == 0) Angry();
         else if (mode == 1) Sad();
@@ -219,7 +228,7 @@ public:
 
         UpdateKeyFrameTracks();
 
-        if(talk) pM.SetMorphWeight(NukudeFace::vrc_v_aa, mouthMove);
+        // if(talk) pM.SetMorphWeight(NukudeFace::vrc_v_aa, mouthMove);
         eEA.Update();
         pM.Update();
         

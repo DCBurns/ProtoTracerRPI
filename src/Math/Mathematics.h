@@ -1,6 +1,5 @@
 #pragma once
 #include <math.h>
-#include <WString.h>
 
 class Mathematics {
 public:
@@ -31,8 +30,8 @@ public:
 		return radians * M180DPI;
 	}
 
-	static String DoubleToCleanString(float value) {
-		return String(value, 4);
+	static std::string DoubleToCleanString(float value) {
+		return std::string(value, 4);
 	}
 
 	static bool IsNaN(float value) {

@@ -3,32 +3,34 @@
 #include "Animation.h"
 #include "KeyFrameTrack.h"
 #include "EasyEaseAnimator.h"
-#include "..\Objects\Background.h"
-#include "..\Objects\LEDStripBackground.h"
-#include "..\Morph\NukudeFace.h"
-#include "..\Render\Scene.h"
-#include "..\Signals\FunctionGenerator.h"
-#include "..\Menu\Menu.h"
-#include "..\Sensors\APDS9960.h"
+#include "../Objects/Background.h"
+#include "../Objects/LEDStripBackground.h"
+#include "../Morph/NukudeFace.h"
+#include "../Render/Scene.h"
+#include "../Signals/FunctionGenerator.h"
+#include "../Menu/SingleButtonMenu.h"
+// #include "../Sensors/APDS9960.h"
 
-#include "..\Materials\Animated\RainbowNoise.h"
-#include "..\Materials\Animated\RainbowSpiral.h"
-#include "..\Materials\Animated\SpectrumAnalyzer.h"
-#include "..\Materials\Animated\AudioReactiveGradient.h"
-#include "..\Materials\Animated\Oscilloscope.h"
+#include "../Materials/Animated/RainbowNoise.h"
+#include "../Materials/Animated/RainbowSpiral.h"
+#include "../Materials/Animated/SpectrumAnalyzer.h"
+#include "../Materials/Animated/AudioReactiveGradient.h"
+#include "../Materials/Animated/Oscilloscope.h"
 
-#include "..\Materials\MaterialAnimator.h"
+#include "../Materials/MaterialAnimator.h"
 
-#include "AnimationTracks\BlinkTrack.h"
+#include "AnimationTracks/BlinkTrack.h"
 
-#include "..\Signals\FFTVoiceDetection.h"
+// #include "../Signals/FFTVoiceDetection.h"
 
-#include "..\Sensors\MicrophoneFourier_MAX9814.h"
+// #include "../Sensors/MicrophoneFourier_MAX9814.h"
 
-#include "..\Render\ObjectAlign.h"
+#include "../Render/ObjectAlign.h"
 
 class ProtogenHUB75AnimationSplit : public Animation<3> {
 private:
+    uint32_t lastTime = millis();
+
     NukudeFace pM;
     Background background;
     LEDStripBackground ledStripBackground;
@@ -65,13 +67,7 @@ private:
     FunctionGenerator fGenMatYMove = FunctionGenerator(FunctionGenerator::Sine, -2.0f, 2.0f, 6.7f);
     FunctionGenerator fGenMatHue = FunctionGenerator(FunctionGenerator::Triangle, 0.0f, 360.0f, 17.3f);
 
-    FunctionGenerator fGenMatXMenu = FunctionGenerator(FunctionGenerator::Sine, -10.0f, 10.0f, 1.1f);
-    FunctionGenerator fGenMatYMenu = FunctionGenerator(FunctionGenerator::Sine, -10.0f, 10.0f, 2.7f);
-    FunctionGenerator fGenMatRMenu = FunctionGenerator(FunctionGenerator::Sine, -5.0f, 5.0f, 1.7f);
-
-    APDS9960 boop;
-
-    FFTVoiceDetection<128> voiceDetection;
+    // FFTVoiceDetection<128> voiceDetection;
     
     ObjectAlign objA = ObjectAlign(Vector2D(0.0f, 0.0f), Vector2D(189.0f, 93.0f), Quaternion());
 
@@ -209,21 +205,21 @@ private:
     }
 
     void UpdateFFTVisemes(){
-        if(Menu::UseMicrophone()){
-            eEA.AddParameterFrame(NukudeFace::vrc_v_ss, MicrophoneFourierIT::GetCurrentMagnitude() / 2.0f);
+        // if(Menu::UseMicrophone()){
+        //     eEA.AddParameterFrame(NukudeFace::vrc_v_ss, MicrophoneFourierIT::GetCurrentMagnitude() / 2.0f);
 
-            if(MicrophoneFourierIT::GetCurrentMagnitude() > 0.05f){
-                voiceDetection.Update(MicrophoneFourierIT::GetFourierFiltered(), MicrophoneFourierIT::GetSampleRate());
+        //     if(MicrophoneFourierIT::GetCurrentMagnitude() > 0.05f){
+        //         voiceDetection.Update(MicrophoneFourierIT::GetFourierFiltered(), MicrophoneFourierIT::GetSampleRate());
         
-                eEA.AddParameterFrame(NukudeFace::vrc_v_ee, voiceDetection.GetViseme(voiceDetection.EE));
-                eEA.AddParameterFrame(NukudeFace::vrc_v_ih, voiceDetection.GetViseme(voiceDetection.AH));
-                eEA.AddParameterFrame(NukudeFace::vrc_v_dd, voiceDetection.GetViseme(voiceDetection.UH));
-                eEA.AddParameterFrame(NukudeFace::vrc_v_rr, voiceDetection.GetViseme(voiceDetection.AR));
-                eEA.AddParameterFrame(NukudeFace::vrc_v_ch, voiceDetection.GetViseme(voiceDetection.ER));
-                eEA.AddParameterFrame(NukudeFace::vrc_v_aa, voiceDetection.GetViseme(voiceDetection.AH));
-                eEA.AddParameterFrame(NukudeFace::vrc_v_oh, voiceDetection.GetViseme(voiceDetection.OO));
-            }
-        }
+        //         eEA.AddParameterFrame(NukudeFace::vrc_v_ee, voiceDetection.GetViseme(voiceDetection.EE));
+        //         eEA.AddParameterFrame(NukudeFace::vrc_v_ih, voiceDetection.GetViseme(voiceDetection.AH));
+        //         eEA.AddParameterFrame(NukudeFace::vrc_v_dd, voiceDetection.GetViseme(voiceDetection.UH));
+        //         eEA.AddParameterFrame(NukudeFace::vrc_v_rr, voiceDetection.GetViseme(voiceDetection.AR));
+        //         eEA.AddParameterFrame(NukudeFace::vrc_v_ch, voiceDetection.GetViseme(voiceDetection.ER));
+        //         eEA.AddParameterFrame(NukudeFace::vrc_v_aa, voiceDetection.GetViseme(voiceDetection.AH));
+        //         eEA.AddParameterFrame(NukudeFace::vrc_v_oh, voiceDetection.GetViseme(voiceDetection.OO));
+        //     }
+        // }
     }
 
     void SetMaterialColor(){
@@ -258,13 +254,21 @@ public:
         background.GetObject()->SetMaterial(&backgroundMaterial);
         ledStripBackground.GetObject()->SetMaterial(&materialAnimator);
 
-        boop.Initialize(5);
+        // boop.Initialize(5);
 
-        MicrophoneFourierIT::Initialize(A0, 8000, 50.0f, 120.0f);//8KHz sample rate, 50dB min, 120dB max
-        Menu::Initialize(9, 20, 500);//7 is number of faces
-        
+        // MicrophoneFourierIT::Initialize(A0, 8000, 50.0f, 120.0f);//8KHz sample rate, 50dB min, 120dB max
+        Menu::Initialize(9, 500);//7 is number of faces
+
         objA.SetJustification(ObjectAlign::Stretch);
         objA.SetMirrorX(true);
+    }
+
+    uint8_t GetAccentBrightness(){
+        return 50;
+    }
+
+    uint8_t GetBrightness(){
+        return 255;
     }
 
     void FadeIn(float stepRatio) override {}
@@ -276,9 +280,11 @@ public:
 
     void SetCameraMirror(bool mirror){
         this->mirror = mirror;
+        // objA.SetMirrorX(!mirror);
     }
 
     void Update(float ratio) override {
+
         if(!mirror){
             gradientSpectrum[0].SetColor(255, 175, 175);
             gradientSpectrum[1].SetColor(255, 55, 225);
@@ -293,10 +299,20 @@ public:
 
             SetMaterialColor();
 
-            bool isBooped = Menu::UseBoopSensor() ? boop.isBooped() : 0;
+            bool isBooped = false; // Menu::UseBoopSensor() ? boop.isBooped() : 0;
             uint8_t mode = Menu::GetFaceState();//change by button press
 
-            MicrophoneFourierIT::Update();
+            auto now = millis();
+
+            if (now - lastTime > 5000) {
+                lastTime = now;
+                mode = (mode + 1) % 6;
+                Menu::SetFaceState(mode);
+
+                std::cout << "mode " << (int)mode << "\n";
+            }
+
+            // MicrophoneFourierIT::Update();
             sA.SetHueAngle(ratio * 360.0f * 4.0f);
             sA.SetMirrorYState(Menu::MirrorSpectrumAnalyzer());
             sA.SetFlipYState(!Menu::MirrorSpectrumAnalyzer());
@@ -324,15 +340,15 @@ public:
                 else if (mode == 4) LookUp();
                 else if (mode == 5) Sad();
                 else if (mode == 6) {
-                    aRG.Update(MicrophoneFourierIT::GetFourierFiltered());
+                    // aRG.Update(MicrophoneFourierIT::GetFourierFiltered());
                     AudioReactiveGradientFace();
                 }
                 else if (mode == 7){
-                    oSC.Update(MicrophoneFourierIT::GetSamples());
+                    // oSC.Update(MicrophoneFourierIT::GetSamples());
                     OscilloscopeFace();
                 }
                 else {
-                    sA.Update(MicrophoneFourierIT::GetFourierFiltered());
+                    // sA.Update(MicrophoneFourierIT::GetFourierFiltered());
                     SpectrumAnalyzerFace();
                 }
             }
@@ -360,13 +376,13 @@ public:
 
             objA.AlignObjects(scene.GetObjects(), 1);
             
+            // eEA.Update();
+            // pM.Update();
+
             pM.GetObject()->GetTransform()->SetPosition(Vector3D(xOffset, yOffset, 0.0f));
             pM.GetObject()->UpdateTransform();
         }
-        else{
-            gradientSpectrum[0].SetColor(255, 175, 175);
-            gradientSpectrum[1].SetColor(255, 55, 225);
-            gradientMat.UpdateRGB();
-        }
+        
+        
     }
 };

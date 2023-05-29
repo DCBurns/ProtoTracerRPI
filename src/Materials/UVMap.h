@@ -11,8 +11,8 @@ public:
     RGBColor GetRGB(Vector3D position, Vector3D normal, Vector3D uvw) override {
         Vector2D rPos = Vector2D(1.0f - uvw.X, uvw.Y);
 
-        unsigned int x = (unsigned int)Mathematics::Map(rPos.X, 0.0f, size.X, xPixels, 0);
-        unsigned int y = (unsigned int)Mathematics::Map(rPos.Y, 0.0f, size.Y, yPixels, 0);
+        unsigned int x = (unsigned int)Mathematics::Map(rPos.X, 0.0f, size.X, (float)xPixels, 0.0f);
+        unsigned int y = (unsigned int)Mathematics::Map(rPos.Y, 0.0f, size.Y, (float)yPixels, 0.0f);
 
         if(x < 0 || x > xPixels || y < 0 || y > yPixels) return RGBColor();
 

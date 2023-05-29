@@ -1,8 +1,8 @@
 #pragma once
 
-#include "..\Math\Mathematics.h"
-#include "..\Math\Quaternion.h"
-#include "..\Math\Vector3D.h"
+#include "../Math/Mathematics.h"
+#include "../Math/Quaternion.h"
+#include "../Math/Vector3D.h"
 
 class RGBColor {
 public:
@@ -95,10 +95,10 @@ public:
         return c;
     }
     
-    String ToString(){
-        String r = String(this->R);
-        String g = String(this->G);
-        String b = String(this->B);
+    std::string ToString(){
+        std::string r = std::to_string(this->R);
+        std::string g = std::to_string(this->G);
+        std::string b = std::to_string(this->B);
         
         return "[" + r + ", " + g + ", " + b + "]";
     }

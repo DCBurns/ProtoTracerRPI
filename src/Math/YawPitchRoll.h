@@ -32,10 +32,10 @@ public:
 		this->Roll = roll;
 	}
 
-	String ToString() {
-		String y = Mathematics::DoubleToCleanString(this->Yaw);
-		String p = Mathematics::DoubleToCleanString(this->Pitch);
-		String r = Mathematics::DoubleToCleanString(this->Roll);
+	std::string ToString() {
+		std::string y = Mathematics::DoubleToCleanString(this->Yaw);
+		std::string p = Mathematics::DoubleToCleanString(this->Pitch);
+		std::string r = Mathematics::DoubleToCleanString(this->Roll);
 
 		return "[" + y + ", " + p + ", " + r + "]";
 	}

@@ -348,11 +348,11 @@ struct Quaternion {
 			fabs(Z - quaternion.Z) < epsilon;
 	}
 
-	String ToString() {
-		String w = Mathematics::DoubleToCleanString(this->W);
-		String x = Mathematics::DoubleToCleanString(this->X);
-		String y = Mathematics::DoubleToCleanString(this->Y);
-		String z = Mathematics::DoubleToCleanString(this->Z);
+	std::string ToString() {
+		std::string w = Mathematics::DoubleToCleanString(this->W);
+		std::string x = Mathematics::DoubleToCleanString(this->X);
+		std::string y = Mathematics::DoubleToCleanString(this->Y);
+		std::string z = Mathematics::DoubleToCleanString(this->Z);
 		
 		return "[" + w + ", " + x + ", " + y + ", " + z + "]";
 		

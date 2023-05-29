@@ -18,11 +18,11 @@ public:
 		Axis = axis;
 	}
 
-	String ToString() {
-		String r = Mathematics::DoubleToCleanString(Rotation);
-		String x = Mathematics::DoubleToCleanString(Axis.X);
-		String y = Mathematics::DoubleToCleanString(Axis.Y);
-		String z = Mathematics::DoubleToCleanString(Axis.Z);
+	std::string ToString() {
+		std::string r = Mathematics::DoubleToCleanString(Rotation);
+		std::string x = Mathematics::DoubleToCleanString(Axis.X);
+		std::string y = Mathematics::DoubleToCleanString(Axis.Y);
+		std::string z = Mathematics::DoubleToCleanString(Axis.Z);
 
 		return r + ": [" + x + " " + y + " " + z + "]";
 	}

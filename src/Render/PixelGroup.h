@@ -409,15 +409,15 @@ public:
 
     void ListPixelNeighbors(){
         for(unsigned int i = 0; i < pixelCount; i++){
-            Serial.print(i); Serial.print('\t');
-            Serial.print(up[i]); Serial.print('\t');
-            Serial.print(down[i]); Serial.print('\t');
-            Serial.print(left[i]); Serial.print('\t');
-            Serial.print(right[i]); Serial.print('\t');
-            Serial.print(upExists[i]); Serial.print('\t');
-            Serial.print(downExists[i]); Serial.print('\t');
-            Serial.print(leftExists[i]); Serial.print('\t');
-            Serial.print(rightExists[i]); Serial.print('\n');
+            // Serial.print(i); Serial.print('\t');
+            // Serial.print(up[i]); Serial.print('\t');
+            // Serial.print(down[i]); Serial.print('\t');
+            // Serial.print(left[i]); Serial.print('\t');
+            // Serial.print(right[i]); Serial.print('\t');
+            // Serial.print(upExists[i]); Serial.print('\t');
+            // Serial.print(downExists[i]); Serial.print('\t');
+            // Serial.print(leftExists[i]); Serial.print('\t');
+            // Serial.print(rightExists[i]); Serial.print('\n');
         }
     }
 };

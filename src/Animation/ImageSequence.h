@@ -1,8 +1,8 @@
 #pragma once
 
-#include "Arduino.h"
-#include "..\Materials\Image.h"
-#include "..\Materials\Material.h"
+// #include "Arduino.h"
+#include "../Materials/Image.h"
+#include "../Materials/Material.h"
 
 class ImageSequence : public Material{
 private:
@@ -52,7 +52,7 @@ public:
     void Update(){
         float currentTime = fmod((millis() - startTime) / 1000.0f, frameTime) / frameTime;//normalize time to ratio
 
-        currentFrame = (unsigned int)Mathematics::Map(currentTime, 0.0f, 1.0f, 0, imageCount - 1);
+        currentFrame = (unsigned int)Mathematics::Map(currentTime, 0.0f, 1.0f, 0.0f, imageCount - 1.0f);
 
         image->SetData(data[currentFrame]);
     }

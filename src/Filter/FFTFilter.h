@@ -1,8 +1,8 @@
 #pragma once
 
-#include <Arduino.h>
+
 #include "RunningAverageFilter.h"
-#include "..\Math\Mathematics.h"
+#include "../Math/Mathematics.h"
 
 class FFTFilter{
 private:

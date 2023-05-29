@@ -55,7 +55,7 @@ public:
   }
 
   // Print text to a specific line on the display
-  void PrintLine(int line, String text) {
+  void PrintLine(int line, std::string text) {
     int len = text.length();
     if (len > 16) {
       len = 16;

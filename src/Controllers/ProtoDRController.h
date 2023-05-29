@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Arduino.h>
+
 #include <OctoWS2811.h>
 #include "Controller.h"
 #include "Render/Camera.h"

@@ -182,9 +182,9 @@ public:
 		return (X == vector.X) && (Y == vector.Y);
 	}
 
-	String ToString() {
-		String x = Mathematics::DoubleToCleanString(X);
-		String y = Mathematics::DoubleToCleanString(Y);
+	std::string ToString() {
+		std::string x = Mathematics::DoubleToCleanString(X);
+		std::string y = Mathematics::DoubleToCleanString(Y);
 
 		return "[" + x + ", " + y + "]";
 	}

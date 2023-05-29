@@ -171,10 +171,10 @@ public:
 		return (this->X == vector.X) && (this->Y == vector.Y) && (this->Z == vector.Z);
 	}
 
-	String ToString() {
-		String x = Mathematics::DoubleToCleanString(this->X);
-		String y = Mathematics::DoubleToCleanString(this->Y);
-		String z = Mathematics::DoubleToCleanString(this->Z);
+	std::string ToString() {
+		std::string x = Mathematics::DoubleToCleanString(this->X);
+		std::string y = Mathematics::DoubleToCleanString(this->Y);
+		std::string z = Mathematics::DoubleToCleanString(this->Z);
 
 		return "[" + x + ", " + y + ", " + z + "]";
 	}

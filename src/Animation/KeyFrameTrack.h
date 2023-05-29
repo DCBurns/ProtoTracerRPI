@@ -1,9 +1,9 @@
 #pragma once
 
-#include <Arduino.h>
+
 #include <float.h>
 #include "KeyFrame.h"
-#include "..\Math\Mathematics.h"
+#include "../Math/Mathematics.h"
 
 class KeyFrameInterpolation{
 public:
@@ -50,6 +50,7 @@ public:
     float GetCurrentTime(){
         currentTime = fmod(millis() / 1000.0f + timeOffset, stopFrameTime - startFrameTime) + startFrameTime;//normalize time and add offset
 
+        // std::cout << "CurrentTime: " << currentTime << "\n";
         return currentTime;
     }
 
@@ -73,6 +74,18 @@ public:
             parameters[currentParameters] = parameter;
             currentParameters++;
         }
+    }
+
+    // Useful for cases like swapping which parameter you're using for a blink animation if you use different blink shapekeys depending
+    //  on which face you have enabled
+    void RemoveLastParameter(){
+        if(currentParameters > 0){
+            currentParameters--;
+        }
+    }
+
+    void RemoveAllParameters(){
+        currentParameters = 0;
     }
 
     void AddKeyFrame(float time, float value){
@@ -116,7 +129,7 @@ public:
 
         GetCurrentTime();
 
-        byte previousFrame = 0, nextFrame = 0;
+        uint8_t previousFrame = 0, nextFrame = 0;
 
         //find current time, find keyframe before and after
         if(currentFrames > 0 && isActive){
@@ -146,6 +159,10 @@ public:
             }
 
             parameterValue = parameter;
+
+            // if (keyFrames[previousFrame].Value > 0.0f || keyFrames[nextFrame].Value > 0.0f) {
+            //     std::cout << "Current Blink ParameterValue: " << parameterValue << "\t" << currentTime << "\t" << this->parameters[0] << "\n";
+            // }
 
             if (currentParameters > 0){//Update if not parameters are linked
                 for(uint8_t i = 0; i < currentParameters; i++){

@@ -1,7 +1,12 @@
 #pragma once
 
+#ifdef ARDUINOPATCH
+#include "ArduinoPatch.h"
+#else
 #include "Arduino.h"
-#include "Math\Mathematics.h"
+#endif
+
+#include "Math/Mathematics.h"
 
 class FunctionGenerator{
 public:

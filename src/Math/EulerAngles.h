@@ -20,9 +20,9 @@ public:
 		Order = order;
 	}
 
-	String ToString() {
-		String angles = Angles.ToString();
-		String order = Order.ToString();
+	std::string ToString() {
+		std::string angles = Angles.ToString();
+		std::string order = Order.ToString();
 
 		return "[ " + angles + ", " + order + " ]";
 	}

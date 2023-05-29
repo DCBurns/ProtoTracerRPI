@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Arduino.h>
+
 #include <EEPROM.h>
 #include "Adafruit_NeoTrellis.h"
 

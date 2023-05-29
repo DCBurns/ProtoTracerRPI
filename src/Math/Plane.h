@@ -15,9 +15,9 @@ public:
         this->Normal = normal;
     }
 
-	String ToString() {
-		String centroid = Centroid.ToString();
-		String normal = Normal.ToString();
+	std::string ToString() {
+		std::string centroid = Centroid.ToString();
+		std::string normal = Normal.ToString();
 
 		return "[ " + centroid + ", " + normal + " ]";
 	}

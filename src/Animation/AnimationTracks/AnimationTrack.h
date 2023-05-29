@@ -1,6 +1,6 @@
 #pragma once
 
-#include "..\KeyFrameTrack.h"
+#include "../KeyFrameTrack.h"
 
 template<size_t maxParameters, size_t maxKeyFrames>
 class AnimationTrack{
@@ -8,7 +8,7 @@ protected:
     KeyFrameTrack<maxParameters, maxKeyFrames> track;
 
 private:
-    virtual void AddKeyFrames();
+    virtual void AddKeyFrames()=0;
 
 public:
     AnimationTrack() : track(KeyFrameTrack<maxParameters, maxKeyFrames>(0.0f, 1.0f, KeyFrameInterpolation::Cosine)){}
@@ -37,6 +37,14 @@ public:
 
     void AddParameter(float* parameter){
         track.AddParameter(parameter);
+    }
+
+    void RemoveAllParameters(){
+        track.RemoveAllParameters();
+    }
+
+    void RemoveLastParameter(){
+        track.RemoveLastParameter();
     }
 
 };

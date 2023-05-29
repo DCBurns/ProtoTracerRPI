@@ -1,6 +1,6 @@
 #pragma once
 
-#include <Arduino.h>
+
 
 template<size_t memory>
 class RunningAverageFilter {

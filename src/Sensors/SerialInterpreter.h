@@ -1,7 +1,7 @@
 #pragma once
 
-#include "..\Math\Quaternion.h"
-#include "..\Materials\RGBColor.h"
+#include "../Math/Quaternion.h"
+#include "../Materials/RGBColor.h"
 #include <SerialTransfer.h>
 
 class SerialInterpreter{

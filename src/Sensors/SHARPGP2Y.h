@@ -2,8 +2,8 @@
 //Polynomial curve from: https://lucidar.me/en/arduino/arduino-accurate-distance-measurement-sharp-GP2Y0A02YK/
 #pragma once
 
-#include <Arduino.h>
-#include "..\Filter\KalmanFilter.h"
+
+#include "../Filter/KalmanFilter.h"
 
 class SHARPGP2Y{
 private:

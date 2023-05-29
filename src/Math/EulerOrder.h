@@ -52,7 +52,7 @@ public:
 		Permutation = permutation;
 	}
 
-	String ToString() {
+	std::string ToString() {
 		return Permutation.ToString();
 	}
 

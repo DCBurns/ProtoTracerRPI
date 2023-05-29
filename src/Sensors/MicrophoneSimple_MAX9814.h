@@ -1,9 +1,9 @@
 //Configured for 60dB gain
 
-#include <Arduino.h>
-#include "..\Math\Mathematics.h"
-#include "..\Filter\RunningAverageFilter.h"
-#include "..\Filter\MinFilter.h"
+
+#include "../Math/Mathematics.h"
+#include "../Filter/RunningAverageFilter.h"
+#include "../Filter/MinFilter.h"
 
 class MicrophoneSimple{
 private:

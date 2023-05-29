@@ -1,11 +1,11 @@
 #pragma once
 
-#include "Arduino.h"
-#include "..\Math\Rotation.h"
+// #include "Arduino.h"
+#include "../Math/Rotation.h"
 #include "Morph.h"
-#include "..\Materials\SimpleMaterial.h"
-#include "..\Render\IndexGroup.h"
-#include "..\Render\Object3D.h"
+#include "../Materials/SimpleMaterial.h"
+#include "../Render/IndexGroup.h"
+#include "../Render/Object3D.h"
 
 class NukudeFace{
 public:
@@ -45,7 +45,7 @@ private:
     SimpleMaterial simpleMaterial = SimpleMaterial(RGBColor(128, 128, 128));
     Object3D basisObj = Object3D(&triangleGroup, &simpleMaterial);
 
-    static const byte morphCount = 26;
+    static const uint8_t morphCount = 26;
     int FrownIndexes[4] = {16,17,18,19};
     int DoubtIndexes[41] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40};
     int SurprisedIndexes[41] = {0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,26,27,28,29,30,31,32,33,34,35,36,37,38,39,40};

@@ -8,20 +8,24 @@
 
 class Menu{
 public:
+    // enum MenuState{
+    //     Faces,
+    //     Bright,
+    //     AccentBright,
+    //     Microphone,
+    //     MicLevel,
+    //     BoopSensor,
+    //     SpectrumMirror,
+    //     FaceSize,
+    //     Color
+    // };
     enum MenuState{
         Faces,
-        Bright,
-        AccentBright,
-        Microphone,
-        MicLevel,
-        BoopSensor,
-        SpectrumMirror,
-        FaceSize,
         Color
     };
 
 private:
-    static const uint8_t menuCount = 9;
+    static const uint8_t menuCount = 2;
     static RainbowNoise material;
     static DampedSpring dampedSpringX;
     static DampedSpring dampedSpringShow;
@@ -57,28 +61,28 @@ private:
 
     static void SetMaxEntries(){
         MenuHandler<menuCount>::SetMenuMax(Faces, faceCount);
-        MenuHandler<menuCount>::SetMenuMax(Bright, 10);
-        MenuHandler<menuCount>::SetMenuMax(AccentBright, 10);
-        MenuHandler<menuCount>::SetMenuMax(Microphone, 2);
-        MenuHandler<menuCount>::SetMenuMax(MicLevel, 10);
-        MenuHandler<menuCount>::SetMenuMax(BoopSensor, 2);
-        MenuHandler<menuCount>::SetMenuMax(SpectrumMirror, 2);
-        MenuHandler<menuCount>::SetMenuMax(FaceSize, 10);
+        // MenuHandler<menuCount>::SetMenuMax(Bright, 10);
+        // MenuHandler<menuCount>::SetMenuMax(AccentBright, 10);
+        // MenuHandler<menuCount>::SetMenuMax(Microphone, 2);
+        // MenuHandler<menuCount>::SetMenuMax(MicLevel, 10);
+        // MenuHandler<menuCount>::SetMenuMax(BoopSensor, 2);
+        // MenuHandler<menuCount>::SetMenuMax(SpectrumMirror, 2);
+        // MenuHandler<menuCount>::SetMenuMax(FaceSize, 10);
         MenuHandler<menuCount>::SetMenuMax(Color, 10);
     }
 
     static void SetDefaultEntries(){
-        MenuHandler<menuCount>::SetDefaultValue(Faces, 1);
-        MenuHandler<menuCount>::SetDefaultValue(Bright, 3);
-        MenuHandler<menuCount>::SetDefaultValue(AccentBright, 5);
-        MenuHandler<menuCount>::SetDefaultValue(Microphone, 1);
-        MenuHandler<menuCount>::SetDefaultValue(MicLevel, 5);
-        MenuHandler<menuCount>::SetDefaultValue(BoopSensor, 1);
-        MenuHandler<menuCount>::SetDefaultValue(SpectrumMirror, 0);
-        MenuHandler<menuCount>::SetDefaultValue(FaceSize, 4);
+        MenuHandler<menuCount>::SetDefaultValue(Faces, 0);
+        // MenuHandler<menuCount>::SetDefaultValue(Bright, 3);
+        // MenuHandler<menuCount>::SetDefaultValue(AccentBright, 5);
+        // MenuHandler<menuCount>::SetDefaultValue(Microphone, 1);
+        // MenuHandler<menuCount>::SetDefaultValue(MicLevel, 5);
+        // MenuHandler<menuCount>::SetDefaultValue(BoopSensor, 1);
+        // MenuHandler<menuCount>::SetDefaultValue(SpectrumMirror, 0);
+        // MenuHandler<menuCount>::SetDefaultValue(FaceSize, 4);
         MenuHandler<menuCount>::SetDefaultValue(Color, 0);
 
-        MenuHandler<menuCount>::SetInitialized();
+        MenuHandler<menuCount>::SaveSettings();
     }
 
 public:
@@ -255,13 +259,14 @@ public:
 
         line2 = "            ";
 
-        line2 += GenerateLine(10, GetBrightness());
-        line2 += GenerateLine(10, GetAccentBrightness());
-        line2 += UseMicrophone() ? "   on OFF   " : "   ON off   ";
-        line2 += GenerateLine(10, GetMicLevel());
-        line2 += UseBoopSensor() ? "   on OFF   " : "   ON off   ";
-        line2 += MirrorSpectrumAnalyzer() ? "   on OFF   " : "   ON off   ";
-        line2 += GenerateLine(10, GetFaceSize());
+        // line2 += GenerateLine(10, GetBrightness());
+        // line2 += GenerateLine(10, GetAccentBrightness());
+        // line2 += UseMicrophone() ? "   on OFF   " : "   ON off   ";
+        // line2 += GenerateLine(10, GetMicLevel());
+        // line2 += UseBoopSensor() ? "   on OFF   " : "   ON off   ";
+        // line2 += MirrorSpectrumAnalyzer() ? "   on OFF   " : "   ON off   ";
+        // line2 += GenerateLine(10, GetFaceSize());
+        // line2 += GenerateLine(10, GetFaceColor());
         line2 += GenerateLine(10, GetFaceColor());
 
         textEngine.SetText(1, line2, false);
@@ -277,68 +282,68 @@ public:
         else return MenuHandler<menuCount>::GetMenuValue(Faces);
     }
 
-    static void SetBrightness(uint8_t bright){
-        Menu::bright = bright;
-    }
+    // static void SetBrightness(uint8_t bright){
+    //     Menu::bright = bright;
+    // }
 
-    static uint8_t GetBrightness(){
-        if(isSecondary) return bright;
-        else return MenuHandler<menuCount>::GetMenuValue(Bright);
-    }
+    // static uint8_t GetBrightness(){
+    //     if(isSecondary) return bright;
+    //     else return MenuHandler<menuCount>::GetMenuValue(Bright);
+    // }
 
-    static void SetAccentBrightness(uint8_t accentBright){
-        Menu::accentBright = accentBright;
-    }
+    // static void SetAccentBrightness(uint8_t accentBright){
+    //     Menu::accentBright = accentBright;
+    // }
 
-    static uint8_t GetAccentBrightness(){
-        if(isSecondary) return accentBright;
-        else return MenuHandler<menuCount>::GetMenuValue(AccentBright);
-    }
+    // static uint8_t GetAccentBrightness(){
+    //     if(isSecondary) return accentBright;
+    //     else return MenuHandler<menuCount>::GetMenuValue(AccentBright);
+    // }
 
-    static void SetUseMicrophone(uint8_t microphone){
-        Menu::microphone = microphone;
-    }
+    // static void SetUseMicrophone(uint8_t microphone){
+    //     Menu::microphone = microphone;
+    // }
 
-    static uint8_t UseMicrophone(){
-        if(isSecondary) return microphone;
-        else return MenuHandler<menuCount>::GetMenuValue(Microphone);
-    }
+    // static uint8_t UseMicrophone(){
+    //     if(isSecondary) return microphone;
+    //     else return MenuHandler<menuCount>::GetMenuValue(Microphone);
+    // }
 
-    static void SetMicLevel(uint8_t micLevel){
-        Menu::micLevel = micLevel;
-    }
+    // static void SetMicLevel(uint8_t micLevel){
+    //     Menu::micLevel = micLevel;
+    // }
 
-    static uint8_t GetMicLevel(){
-        if(isSecondary) return micLevel;
-        else return MenuHandler<menuCount>::GetMenuValue(MicLevel);
-    }
+    // static uint8_t GetMicLevel(){
+    //     if(isSecondary) return micLevel;
+    //     else return MenuHandler<menuCount>::GetMenuValue(MicLevel);
+    // }
 
-    static void SetUseBoopSensor(uint8_t boopSensor){
-        Menu::boopSensor = boopSensor;
-    }
+    // static void SetUseBoopSensor(uint8_t boopSensor){
+    //     Menu::boopSensor = boopSensor;
+    // }
 
-    static uint8_t UseBoopSensor(){
-        if(isSecondary) return boopSensor;
-        else return MenuHandler<menuCount>::GetMenuValue(BoopSensor);
-    }
+    // static uint8_t UseBoopSensor(){
+    //     if(isSecondary) return boopSensor;
+    //     else return MenuHandler<menuCount>::GetMenuValue(BoopSensor);
+    // }
 
-    static void SetMirrorSpectrumAnalyzer(uint8_t spectrumMirror){
-        Menu::spectrumMirror = spectrumMirror;
-    }
+    // static void SetMirrorSpectrumAnalyzer(uint8_t spectrumMirror){
+    //     Menu::spectrumMirror = spectrumMirror;
+    // }
 
-    static uint8_t MirrorSpectrumAnalyzer(){
-        if(isSecondary) return spectrumMirror;
-        else return MenuHandler<menuCount>::GetMenuValue(SpectrumMirror);
-    }
+    // static uint8_t MirrorSpectrumAnalyzer(){
+    //     if(isSecondary) return spectrumMirror;
+    //     else return MenuHandler<menuCount>::GetMenuValue(SpectrumMirror);
+    // }
 
-    static void SetFaceSize(uint8_t faceSize){
-        Menu::faceSize = faceSize;
-    }
+    // static void SetFaceSize(uint8_t faceSize){
+    //     Menu::faceSize = faceSize;
+    // }
 
-    static uint8_t GetFaceSize(){
-        if(isSecondary) return faceSize;
-        else return MenuHandler<menuCount>::GetMenuValue(FaceSize);
-    }
+    // static uint8_t GetFaceSize(){
+    //     if(isSecondary) return faceSize;
+    //     else return MenuHandler<menuCount>::GetMenuValue(FaceSize);
+    // }
 
     static void SetFaceColor(uint8_t color){
         Menu::color = color;
@@ -385,5 +390,7 @@ uint8_t Menu::faceSize = 0;
 uint8_t Menu::color = 0;
 
 //                    111111111111222222222222333333333333444444444444555555555555666666666666777777777777888888888888999999999999
-std::string Menu::line1 = "               BRIGHT     SIDEBRT       MIC        LEVEL        BOOP        SPEC        SIZE       COLOR    ";
-std::string Menu::line2 = " a b c d e f   12^45       12^45       ON off     123456|8     on OFF      ON off      12^45      123456|8  ";
+// std::string Menu::line1 = "               BRIGHT     SIDEBRT       MIC        LEVEL        BOOP        SPEC        SIZE       COLOR    ";
+// std::string Menu::line2 = " a b c d e f   12^45       12^45       ON off     123456|8     on OFF      ON off      12^45      123456|8  ";
+std::string Menu::line1 = "                COLOR   ";
+std::string Menu::line2 = " a b c d e f   123456|8 ";

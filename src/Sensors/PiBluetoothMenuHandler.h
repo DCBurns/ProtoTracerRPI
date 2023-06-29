@@ -8,6 +8,7 @@
 #include <thread>
 #include <functional>
 #include <fcntl.h>
+#include <fstream>
 #include <errno.h>
 // #include <stdlib.h>
 #include <linux/input.h>
@@ -18,6 +19,7 @@ template<uint8_t menuCount>
 class MenuHandler{
 private:
     static uint16_t holdingTime;
+    static bool unsavedSettings;
     static uint8_t currentMenu;
     static uint8_t currentValue[menuCount];
     static uint8_t maxValue[menuCount];
@@ -34,6 +36,7 @@ private:
         // Do something to increment currentMenu, currentValue[currentMenu]
         int rc;
 
+        //TODO: Open first available file in controllerFiles list, in the future, try to get the device name before opening (might need linux bs)
         if(fd < 0) {
             printf("File descriptor not open. Reopening.\n");
             rc = OpenDevice(controllerFiles[0]);
@@ -47,7 +50,7 @@ private:
         do {
             struct input_event ev;
             rc = libevdev_next_event(dev, LIBEVDEV_READ_FLAG_NORMAL, &ev);
-            if (rc == 0)
+            if (rc == 0) {
                     // printf("Event: %s %s %d\n",
                     //        libevdev_event_type_get_name(ev.type),
                     //        libevdev_event_code_get_name(ev.type, ev.code),
@@ -57,13 +60,20 @@ private:
                         switch(ev.code) {
                             case KEY_K: currentMenu = (currentMenu + menuCount - 1) % menuCount; break;
                             case KEY_M: currentMenu = (currentMenu + 1) % menuCount; break;
-                            case KEY_C: currentValue[currentMenu] = (currentValue[currentMenu] + 1) % maxValue[currentMenu]; break;
-                            case KEY_D: currentValue[currentMenu] = (currentValue[currentMenu] + maxValue[currentMenu] - 1) % maxValue[currentMenu]; break;
+                            case KEY_C: currentValue[currentMenu] = (currentValue[currentMenu] + 1) % maxValue[currentMenu]; unsavedSettings = true; break;
+                            case KEY_D: currentValue[currentMenu] = (currentValue[currentMenu] + maxValue[currentMenu] - 1) % maxValue[currentMenu]; unsavedSettings = true; break;
                         }
                     }
+            }
+
+            if(unsavedSettings){
+                SaveSettings();
+            }
         } while (rc == 1 || rc == 0 || rc == -EAGAIN);
 
         std::cout << "UpdateState loop done. rc = " << rc << "\t" << strerror(-rc) << "\n";
+        printf("Hello!");
+        
 
         CloseDevice();
     }
@@ -109,16 +119,22 @@ private:
         return rc;
     }
 
-    //TODO: Replace EEPROM with array read/write of currentValue
-    static uint8_t ReadEEPROM(uint16_t index){
-        // return EEPROM.read(index);
-        return 0;
+    // If TRUE, settings were loaded (file exists)
+    static bool LoadSettingsFile(){
+
+        std::ifstream settingsFile("/home/pi/tracer_settings");
+
+        if(settingsFile) {
+            settingsFile.read((char*)currentValue, menuCount);
+            settingsFile.close();
+            return true;
+        }
+
+        unsavedSettings = false;
+
+        return false;
     }
 
-    //WRITE SETTINGS TO EEPROM
-    static void WriteEEPROM(uint16_t index, uint8_t value){
-        // EEPROM.write(index, value);
-    }
 
     static std::thread timer_start(std::function<void(void)> func, unsigned int interval) {
         std::thread current_thread = std::thread([func, interval]()
@@ -150,19 +166,25 @@ public:
 
         MenuHandler::holdingTime = holdingTime;
 
-        return false; // always set defaults (for testing)
+        return LoadSettingsFile();
     }
 
     static void SetDefaultValue(uint16_t menu, uint8_t value){
         if(menu >= menuCount) return;
 
         currentValue[menu] = value;
-
-        WriteEEPROM(menu, value);
     }
 
-    static void SetInitialized(){
-        WriteEEPROM(menuCount + 1, 0);
+    static void SaveSettings(){
+        std::ofstream settingsFile("/home/pi/tracer_settings");
+
+        settingsFile.write((char*)currentValue, menuCount);
+        
+        settingsFile.close();
+
+        unsavedSettings = false;
+
+        printf("Settings saved!\n");
     }
 
     static void SetMenuMax(uint8_t menu, uint8_t maxValue){
@@ -184,6 +206,8 @@ public:
 
 template<uint8_t menuCount>
 uint16_t MenuHandler<menuCount>::holdingTime;
+template<uint8_t menuCount>
+bool MenuHandler<menuCount>::unsavedSettings = false;
 template<uint8_t menuCount>
 uint8_t MenuHandler<menuCount>::currentMenu;
 template<uint8_t menuCount>

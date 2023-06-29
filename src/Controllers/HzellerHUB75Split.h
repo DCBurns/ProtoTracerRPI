@@ -74,7 +74,7 @@ public:
             }
         }
 
-        offscreen_canvas->SetPixel(63,0, 255, 0, 0);
+        // offscreen_canvas->SetPixel(63,0, 255, 0, 0);
 
         offscreen_canvas = canvas->SwapOnVSync(offscreen_canvas);
     }

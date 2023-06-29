@@ -25,6 +25,8 @@
 
 // #include "../Sensors/MicrophoneFourier_MAX9814.h"
 
+#include "../Sensors/MouthFIFO.h"
+
 #include "../Render/ObjectAlign.h"
 
 class BiasAnimation : public Animation<3> {
@@ -43,12 +45,13 @@ private:
     SimpleMaterial orangeMaterial = SimpleMaterial(RGBColor(255, 165, 0));
     SimpleMaterial whiteMaterial = SimpleMaterial(RGBColor(255, 255, 255));
     SimpleMaterial greenMaterial = SimpleMaterial(RGBColor(0, 255, 0));
-    SimpleMaterial blueMaterial = SimpleMaterial(RGBColor(0, 0, 255));
+    SimpleMaterial blueMaterial = SimpleMaterial(RGBColor(0, 136, 255));
     SimpleMaterial yellowMaterial = SimpleMaterial(RGBColor(255, 255, 0));
     SimpleMaterial purpleMaterial = SimpleMaterial(RGBColor(255, 0, 255));
     
-    RGBColor gradientSpectrum[2] = {RGBColor(255, 0, 0), RGBColor(0, 0, 255)};
-    GradientMaterial<2> gradientMat = GradientMaterial<2>(gradientSpectrum, 350.0f, false);
+    // RGBColor gradientSpectrum[2] = {RGBColor(90, 178, 255), RGBColor(0, 136, 255)};
+    RGBColor gradientSpectrum[2] = {RGBColor(255, 255, 255), RGBColor(0, 136, 255)};
+    GradientMaterial<2> gradientMat = GradientMaterial<2>(gradientSpectrum, 100.0f, false);
     
     MaterialAnimator<10> materialAnimator;
     MaterialAnimator<4> backgroundMaterial;
@@ -56,6 +59,8 @@ private:
     SpectrumAnalyzer sA = SpectrumAnalyzer(Vector2D(200, 100), Vector2D(100, 50), true, true); 
     AudioReactiveGradient aRG = AudioReactiveGradient(Vector2D(160, 160), Vector2D(0, 0), true, true); 
     Oscilloscope oSC = Oscilloscope(Vector2D(200, 100), Vector2D(0, 0));
+
+    MouthFIFO mouth = MouthFIFO();
 
     //Animation controllers
     BlinkTrack<1> blink;
@@ -147,7 +152,7 @@ private:
 
     void Happy(){
         eEA.AddParameterFrame(BiasFace::Happy, 1.0f);
-        materialAnimator.AddMaterialFrame(rainbowSpiral, 0.8f);
+        // materialAnimator.AddMaterialFrame(rainbowSpiral, 0.8f);
         blink.AddParameter(pM.GetMorphWeightReference(BiasFace::BlinkHappy));
     }
 
@@ -260,8 +265,8 @@ public:
     void Update(float ratio) override {
 
         if(!mirror){
-            gradientSpectrum[0].SetColor(255, 175, 175);
-            gradientSpectrum[1].SetColor(255, 55, 225);
+            // gradientSpectrum[0].SetColor(255, 175, 175);
+            // gradientSpectrum[1].SetColor(255, 55, 225);
             gradientMat.UpdateRGB();
 
             pM.Reset();
@@ -279,18 +284,21 @@ public:
 
             auto now = millis();
 
-            if (now - lastTime > 15000) {
-                lastTime = now;
-                mode = (mode + 1) % 3;
-                Menu::SetFaceState(mode);
+            // if (now - lastTime > 15000) {
+            //     lastTime = now;
+            //     mode = (mode + 1) % 3;
+            //     Menu::SetFaceState(mode);
 
-                std::cout << "mode " << (int)mode << "\n";
-            }
+            //     std::cout << "mode " << (int)mode << "\n";
+            // }
 
             // MicrophoneFourierIT::Update();
+            // mouth.getScale();
+            eEA.AddParameterFrame(BiasFace::MouthOpen, mouth.getScale());
+
             sA.SetHueAngle(ratio * 360.0f * 4.0f);
-            sA.SetMirrorYState(Menu::MirrorSpectrumAnalyzer());
-            sA.SetFlipYState(!Menu::MirrorSpectrumAnalyzer());
+            // sA.SetMirrorYState(Menu::MirrorSpectrumAnalyzer());
+            // sA.SetFlipYState(!Menu::MirrorSpectrumAnalyzer());
             
             aRG.SetRadius((xOffset + 2.0f) * 2.0f + 25.0f);
             aRG.SetSize(Vector2D((xOffset + 2.0f) * 10.0f + 50.0f, (xOffset + 2.0f) * 10.0f + 50.0f));
@@ -316,19 +324,20 @@ public:
             materialAnimator.Update();
             backgroundMaterial.Update();
 
-            uint8_t faceSize = Menu::GetFaceSize();
+            // uint8_t faceSize = Menu::GetFaceSize();
             float scale = Menu::ShowMenu() * 0.6f + 0.4f;
-            float faceSizeOffset = faceSize * 8.0f;
+            // float faceSizeOffset = faceSize * 8.0f;
 
-            objA.SetPlaneOffsetAngle(0.0f);
+            // objA.SetPlaneOffsetAngle(0.0f);
             // objA.SetEdgeMargin(2.0f);
-            objA.SetCameraMax(Vector2D(110.0f + faceSizeOffset, 93.0f - 93.0f * offsetFace).Multiply(scale));
+            // objA.SetCameraMax(Vector2D(110.0f + faceSizeOffset, 93.0f - 93.0f * offsetFace).Multiply(scale));
 
             // objA.AlignObjects(scene.GetObjects(), 1);
             // pM.GetObject()->GetTransform()->SetPosition(Vector3D(-100.0f, 0.0f, 0.0f));
             
 
             pM.GetObject()->GetTransform()->SetPosition(Vector3D(xOffset, yOffset, 0.0f));
+            pM.GetObject()->GetTransform()->SetScale(Vector3D(scale, scale, scale));
             pM.GetObject()->UpdateTransform();
         }
         
